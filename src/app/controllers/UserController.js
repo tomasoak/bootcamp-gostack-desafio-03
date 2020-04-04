@@ -6,7 +6,7 @@ class UserController {
     const user = await User.findByPk(req.params.id);
 
     if (!user) {
-      res.status(400).json({ error: 'User does not exists' });
+      res.status(400).json({ error: 'User does not exist' });
     }
 
     return res.json(user);
