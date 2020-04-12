@@ -7,6 +7,7 @@ import SessionController from './app/controllers/SessionController';
 import UserController from './app/controllers/UserController';
 import FileController from './app/controllers/FileController';
 import DeliverymanController from './app/controllers/DeliverymanController';
+import DeliveryController from './app/controllers/DeliveryController';
 
 import authMiddleware from './app/middlewares/auth';
 import adminMiddlleware from './app/middlewares/admin';
@@ -23,15 +24,28 @@ routes.post('/sessions', SessionController.store);
 routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
-routes.delete('/users/:id', UserController.destroy);
+routes.delete('/users/:id', UserController.delete);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
-routes.post('/deliveryman', DeliverymanController.store);
-routes.get('/deliveryman', DeliverymanController.index);
-routes.put('/deliveryman/:id', DeliverymanController.update);
-routes.delete('/deliveryman/:id', DeliverymanController.delete);
+// CRUD for Packages - for deliveryman
 
+
+
+// CRUD For Deliveryman - for admin
+routes.post('/deliveryman',adminMiddlleware, DeliverymanController.store);
+routes.get('/deliveryman', adminMiddlleware, DeliverymanController.index);
+routes.put('/deliveryman/:id', adminMiddlleware, DeliverymanController.update);
+routes.delete('/deliveryman/:id', adminMiddlleware, DeliverymanController.delete);
+
+// CRUD For Delivery - for admin
+routes.post('/delivery', adminMiddlleware, DeliveryController.store);
+routes.get('/delivery', adminMiddlleware, DeliveryController.index);
+routes.get('/delivery/:id', adminMiddlleware, DeliveryController.show);
+routes.put('/delivery/:id', adminMiddlleware, DeliveryController.update);
+routes.delete('/delivery/:id', adminMiddlleware, DeliveryController.delete);
+
+// CRUD For Recipients - for admin
 routes.get('/recipients', adminMiddlleware, RecipientController.index);
 routes.get('/recipients/:id', adminMiddlleware, RecipientController.show);
 routes.post('/recipients', adminMiddlleware, RecipientController.store);

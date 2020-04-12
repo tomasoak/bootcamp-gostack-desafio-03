@@ -93,7 +93,7 @@ class UserController {
     return res.json({ id, name, email, admin });
   }
 
-  async destroy(req, res) {
+  async delete(req, res) {
     const user = await User.findByPk(req.params.id);
 
     if (!user) {
